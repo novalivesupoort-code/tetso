@@ -1,0 +1,30 @@
+name: Test eamer
+
+on:
+  workflow_dispatch:
+
+jobs:
+  stream:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+
+    steps:
+      - name: Install FFmpeg
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+
+      - name: Start Streaming
+        run: |
+          while true; do
+            ffmpeg -hide_banner -loglevel error \
+            -reconnect 1 -reconnect_at_eof 1 -reconnect_streamed 1 -reconnect_delay_max 5 \
+            -i 'http://g.mztk02.xyz/at/sh/551278?token=ShN0YQ0JGlhBVEk9ShAWG04kBi5fWQJEC0E8WgsHJDJHQQQJQQQQQ1JHG0EQQQQQQQ0QQQ0UWwVQAVVQUwxNQ0QQQQQQQQxAWUcQAQQQQQQQRhVGQQQQQUcNUFJQDFFQBQQACEgSQQQQRw1BQQQHQQQQQEYcFAQQQQQQQQQQQQQQQQQQQRICDBYJW09EV1xnBQFUBV5SQw5HBkNJRAQQQRMLXEQIXB.RAAQxDEQdMVxpbRghcBwBDGEdUDhAITRMYEwsQdSESFEAGHUMGCEtbVw9GA0ZERUMYR14SOhRcEhVDVFNcAUIaWEFVFU9EVVNAPgdWCl5TAkAMQQQQRANDQBMdEFQQQQQQAQQQEQQQEAJDQQQQQQQQQ0dK' \
+            -c:v libx264 -preset veryfast -tune zerolatency -pix_fmt yuv420p \
+            -b:v 2000k -maxrate 2000k -bufsize 4000k \
+            -vf "fps=30,scale=1280:720,format=yuv420p,drawtext=text='t.me/xl9rr':fontsize=28:fontcolor=white@0.7:x=w-mod(t*90\,(w+tw)):y=h-62" \
+            -g 60 -sc_threshold 0 \
+            -c:a aac -b:a 100k -ar 44100 \
+            -f flv "rtmps://dc4-1.rtmp.t.me/s/2625753690:ayM9m5yb2zNYxOLNUd83Sw"
+            
+            echo "إعادة الاتصال..."
+            sleep 2
+          done
