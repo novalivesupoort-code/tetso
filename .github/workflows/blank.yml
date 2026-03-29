@@ -23,7 +23,7 @@ jobs:
             -vf "fps=30,scale=1280:720,format=yuv420p" \
             -g 60 -sc_threshold 0 \
             -c:a aac -ar 44100 \
-            -f flv "rtmps://dc4-1.rtmp.t.me/s/2625753690:ayM9m5yb2zNYxOLNUd83Sw"
+            -f flv "rtmps://dc4-1.rtmp.t.me/s/2625753690:7vTtB4e37OUyPiAGGgdm5A"
             
             echo "إعادة الاتصال..."
             sleep 2
