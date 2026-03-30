@@ -1,4 +1,4 @@
-name: Test mpd
+name: Test Streaming
 
 on:
   workflow_dispatch:
@@ -16,18 +16,17 @@ jobs:
         run: |
           while true; do
             ffmpeg -hide_banner -loglevel info \
-            -user_agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" \
-            -err_detect ignore_err -fflags +genpts+igndts \
-            -reconnect 1 -reconnect_at_eof 1 -reconnect_streamed 1 -reconnect_delay_max 5 \
+            -headers "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" \
+            -headers "Referer: https://mrayham-netfly.hf.space/" \
+            -f dash \
             -i 'https://mrayham-netfly.hf.space/stream/1-720p.mpd' \
             -c:v libx264 -preset ultrafast -tune zerolatency -pix_fmt yuv420p \
             -b:v 3000k \
             -vf "fps=30,format=yuv420p" \
             -g 60 -sc_threshold 0 \
-            -c:a aac -ar 44100 -b:a 128k \
+            -c:a aac -ar 44100 \
             -f flv "rtmps://dc4-1.rtmp.t.me/s/2469921338:bsK9F5BRae81ZMRCvUZFgA"
             
-            echo "حدث انقطاع، إعادة المحاولة..."
+            echo "فشل الاتصال أو انتهى الملف، إعادة المحاولة..."
             sleep 2
           done
-
