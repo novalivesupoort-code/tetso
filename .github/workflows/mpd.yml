@@ -1,4 +1,4 @@
-name: Live Stream mpd
+name: 📡 Live Stream
 
 on:
   workflow_dispatch:
@@ -7,47 +7,28 @@ jobs:
   stream:
     runs-on: ubuntu-latest
     timeout-minutes: 350
-
     steps:
       - name: Install FFmpeg
         run: sudo apt-get update -qq && sudo apt-get install -y ffmpeg -qq
 
-      - name: Start Streaming
+      - name: Stream
         run: |
           while true; do
             ffmpeg -hide_banner -loglevel warning \
-            -thread_queue_size 512 \
-            -user_agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
+            -user_agent "Mozilla/5.0" \
             -headers "Referer: https://mrayham-netfly.hf.space/" \
-            -err_detect ignore_err \
             -fflags +genpts+discardcorrupt \
             -f dash \
             -i 'https://mrayham-netfly.hf.space/stream/1-720p.mpd' \
-            -map 0:v:0 \
-            -map 0:a:0 \
+            -map 0:v:0 -map 0:a:0 \
             -c:v libx264 \
-            -preset ultrafast \
+            -preset superfast \
             -tune zerolatency \
-            -profile:v baseline \
-            -level 3.1 \
-            -x264-params "nal-hrd=cbr:force-cfr=1:no-mbtree=1:sync-lookahead=0:rc-lookahead=0" \
+            -x264opts keyint=50:min-keyint=50:no-scenecut \
             -pix_fmt yuv420p \
-            -b:v 2000k \
-            -minrate 2000k \
-            -maxrate 2000k \
-            -bufsize 4000k \
-            -r 25 \
-            -g 50 \
-            -keyint_min 50 \
-            -sc_threshold 0 \
-            -c:a aac \
-            -b:a 96k \
-            -ar 44100 \
-            -ac 2 \
-            -af aresample=async=1000 \
-            -max_muxing_queue_size 1024 \
+            -b:v 2500k -maxrate 2500k -bufsize 5000k \
+            -c:a aac -b:a 128k -ac 2 -ar 44100 \
             -f flv \
             "rtmps://dc4-1.rtmp.t.me/s/2469921338:bsK9F5BRae81ZMRCvUZFgA"
-            echo "reldojdjd..."
             sleep 3
           done
