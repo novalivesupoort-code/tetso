@@ -1,0 +1,31 @@
+name: Test Live Mpd
+
+on:
+  workflow_dispatch:
+
+jobs:
+  stream:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+
+    steps:
+      - name: Install FFmpeg
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+
+      - name: Start Streaming
+        run: |
+          while true; do
+            ffmpeg -hide_banner -loglevel error \
+            -reconnect 1 -reconnect_at_eof 1 -reconnect_streamed 1 -reconnect_delay_max 5 \
+            -i 'https://mrayham-netfly.hf.space/stream/1-720p.mpd' \
+            -c:v libx264 -preset ultrafast -tune zerolatency -pix_fmt yuv420p \
+            -b:v 3000k \
+            -vf "fps=30,format=yuv420p" \
+            -g 60 -sc_threshold 0 \
+            -c:a aac -ar 44100 \
+            -f flv "rtmps://dc4-1.rtmp.t.me/s/2469921338:bsK9F5BRae81ZMRCvUZFgA"
+            
+            echo "إعادة الاتصال..."
+            sleep 2
+          done
+
