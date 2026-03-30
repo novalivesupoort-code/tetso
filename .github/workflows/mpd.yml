@@ -1,4 +1,4 @@
-name: Test StreamingO
+name: Live Stream
 
 on:
   workflow_dispatch:
@@ -10,24 +10,36 @@ jobs:
 
     steps:
       - name: Install FFmpeg
-        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+        run: sudo apt-get update -qq && sudo apt-get install -y ffmpeg -qq
 
       - name: Start Streaming
         run: |
           while true; do
             ffmpeg -hide_banner -loglevel warning \
-            -headers "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" \
+            -user_agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" \
             -headers "Referer: https://mrayham-netfly.hf.space/" \
-            -flags low_delay -fflags +genpts+discardcorrupt \
-            -f dash -i 'https://mrayham-netfly.hf.space/stream/1-720p.mpd' \
-            -map 0:v:0 -map 0:a:0 \
-            -c:v libx264 -preset ultrafast -tune zerolatency -pix_fmt yuv420p \
-            -b:v 2500k -g 60 \
-            -vf "fps=30,format=yuv420p" \
-            -c:a aac -ar 44100 -b:a 100k -ac 2 \
-            -f flv "rtmps://dc4-1.rtmp.t.me/s/2469921338:bsK9F5BRae81ZMRCvUZFgA"
-            
-            echo "إعادة المحاولة لتصحيح المسار..."
-            sleep 1
+            -re \
+            -err_detect ignore_err \
+            -fflags +genpts+discardcorrupt \
+            -f dash \
+            -i 'https://mrayham-netfly.hf.space/stream/1-720p.mpd' \
+            -map 0:v:0 \
+            -map 0:a:0 \
+            -c:v libx264 \
+            -preset ultrafast \
+            -tune zerolatency \
+            -vf scale=854:480,fps=25,format=yuv420p \
+            -b:v 1500k \
+            -g 50 \
+            -keyint_min 50 \
+            -sc_threshold 0 \
+            -c:a aac \
+            -b:a 96k \
+            -ar 44100 \
+            -ac 2 \
+            -af aresample=async=1000 \
+            -f flv \
+            "rtmps://dc4-1.rtmp.t.me/s/2469921338:bsK9F5BRae81ZMRCvUZFgA"
+            echo "reloading..."
+            sleep 3
           done
-
