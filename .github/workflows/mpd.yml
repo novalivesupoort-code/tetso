@@ -1,4 +1,4 @@
-name: Test Streaming
+name: Test StreamingO
 
 on:
   workflow_dispatch:
@@ -15,18 +15,19 @@ jobs:
       - name: Start Streaming
         run: |
           while true; do
-            ffmpeg -hide_banner -loglevel info \
+            ffmpeg -hide_banner -loglevel warning \
             -headers "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" \
             -headers "Referer: https://mrayham-netfly.hf.space/" \
-            -f dash \
-            -i 'https://mrayham-netfly.hf.space/stream/1-720p.mpd' \
+            -flags low_delay -fflags +genpts+discardcorrupt \
+            -f dash -i 'https://mrayham-netfly.hf.space/stream/1-720p.mpd' \
+            -map 0:v:0 -map 0:a:0 \
             -c:v libx264 -preset ultrafast -tune zerolatency -pix_fmt yuv420p \
-            -b:v 3000k \
+            -b:v 2500k -g 60 \
             -vf "fps=30,format=yuv420p" \
-            -g 60 -sc_threshold 0 \
-            -c:a aac -ar 44100 \
+            -c:a aac -ar 44100 -b:a 100k -ac 2 \
             -f flv "rtmps://dc4-1.rtmp.t.me/s/2469921338:bsK9F5BRae81ZMRCvUZFgA"
             
-            echo "فشل الاتصال أو انتهى الملف، إعادة المحاولة..."
-            sleep 2
+            echo "إعادة المحاولة لتصحيح المسار..."
+            sleep 1
           done
+
