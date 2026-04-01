@@ -17,13 +17,13 @@ jobs:
           while true; do
             ffmpeg -hide_banner -loglevel error \
             -reconnect 1 -reconnect_at_eof 1 -reconnect_streamed 1 -reconnect_delay_max 5 \
-            -i 'http://g.aezr08.xyz/at/sh/74883?token=ShN0YQ0JGlhBVEk9ShAWG04kBi5fWQJEC0E8WgsHJDJHQQQJQQQQQ1JHG0EQQQQQQQ0QQQ0UWwVQAVVQUwxNQ0QQQQQQQQxAWUcQAQQQQQQQRhVGQQQQQUcNUFJQDFFQBQQACEgSQQQQRw1BQQQHQQQQQEYcFAQQQQQQQQQQQQQQQQQQQRICDBYJW09EV1xnBQFUBV5SQw5HBkNJRAQQQRMLXEQIXB.RAAQxDEQdMVxpbRghcBwBDGEdUDhAITRMYEwsQdSESFEAGHUMGCEtbVw9GA0ZERUMYR14SOhRcEhVDVFNcAUIaWEFVFU9EVVNAPgdWCl5TAkAMQQQQRANDQBMdEFQQQQQQAQQQEQQQEAJDQQQQQQQQQ0dK' \
+            -i 'http://g.tsbe39.xyz/ayham/ayham/1339213?token=ShN0YQ0JGlhBVEk9ShAWG04kBi5fWQJEC0E8WgsHJDJHQQQJQQQQQ1JHG0EQQQQQQQ0QQQ0UWwVQAVVQUwxNQ0QQQQQQQQxAWUcQAQQQQQQQRhVGQQQQQUcNUFJQDFFQBQQACEgSQQQQRw1BQQQHQQQQQEYcFAQQQQQQQQQQQQQQQQQQQRICDBYJW09EV1xnBQFUBV5SQw5HBkNJRAQQQRMLXEQIXB.RAAQxDEQdMVxpbRghcBwBDGEdUDhAITRMYEwsQdSESFEAGHUMGCEtbVw9GA0ZERUMYR14SOhRcEhVDVFNcAUIaWEFVFU9EVVNAPgdWCl5TAkAMQQQQRANDQBMdEFQQQQQQAQQQEQQQEAJDQQQQQQQQQ0dK' \
             -c:v libx264 -preset veryfast -tune zerolatency -pix_fmt yuv420p \
             -b:v 2000k -maxrate 2000k -bufsize 4000k \
             -vf "fps=30,scale=1280:720,format=yuv420p,drawtext=text='t.me/xl9rr':fontsize=28:fontcolor=white@0.7:x=w-mod(t*90\,(w+tw)):y=h-62" \
             -g 60 -sc_threshold 0 \
             -c:a aac -b:a 100k -ar 44100 \
-            -f flv "rtmps://dc4-1.rtmp.t.me/s/2625753690:7vTtB4e37OUyPiAGGgdm5A"
+            -f flv "rtmps://dc4-1.rtmp.t.me/s/1301415715:247oJPNSP32ZvFw4-1_8aA"
             
             echo "إعادة الاتصال..."
             sleep 2
