@@ -19,7 +19,7 @@ jobs:
             -reconnect 1 -reconnect_at_eof 1 -reconnect_streamed 1 -reconnect_delay_max 5 \
             -i 'http://g.mtvs50.xyz/ayham/ayham/1339221?token=ShN0YQ0JGlhBVEk9ShAWG04kBi5fWQJEC0E8WgsHJDJHQQQJQQQQQ1JHG0EQQQQQQQ0QQQ0UWwVQAVVQUwxNQ0QQQQQQQQxAWUcQAQQQQQQQRhVGQQQQQUcNUFJQDFFQBQQACEgSQQQQRw1BQQQHQQQQQEYcFAQQQQQQQQQQQQQQQQQQQRICDBYJW09EV1xnBQFUBV5SQw5HBkNJRAQQQRMLXEQIXB.RAAQxDEQdMVxpbRghcBwBDGEdUDhAITRMYEwsQdSESFEAGHUMGCEtbVw9GA0ZERUMYR14SOhRcEhVDVFNcAUIaWEFVFU9EVVNAPgdWCl5TAkAMQQQQRANDQBMdEFQQQQQQAQQQEQQQEAJDQQQQQQQQQ0dK' \
             -c:v libx264 -preset veryfast -tune zerolatency -pix_fmt yuv420p \
-            -b:v 2000k -maxrate 2000k -bufsize 4000k \
+            -b:v 2500k -maxrate 2500k -bufsize 5000k \
             -vf "fps=30,scale=1280:720,format=yuv420p,drawtext=text='t.me/xl9rr':fontsize=28:fontcolor=white@0.7:x=w-mod(t*90\,(w+tw)):y=h-62" \
             -g 60 -sc_threshold 0 \
             -c:a aac -b:a 100k -ar 44100 \
