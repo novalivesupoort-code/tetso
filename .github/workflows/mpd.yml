@@ -1,4 +1,4 @@
-name: 📡 Live Stream
+name: Final Montertest777
 
 on:
   workflow_dispatch:
@@ -7,28 +7,25 @@ jobs:
   stream:
     runs-on: ubuntu-latest
     timeout-minutes: 350
+
     steps:
       - name: Install FFmpeg
-        run: sudo apt-get update -qq && sudo apt-get install -y ffmpeg -qq
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
 
-      - name: Stream
+      - name: Start Streaming
         run: |
           while true; do
-            ffmpeg -hide_banner -loglevel warning \
-            -user_agent "Mozilla/5.0" \
-            -headers "Referer: https://mrayham-netfly.hf.space/" \
-            -fflags +genpts+discardcorrupt \
-            -f dash \
-            -i 'https://mrayham-netfly.hf.space/stream/1-720p.mpd' \
-            -map 0:v:0 -map 0:a:0 \
-            -c:v libx264 \
-            -preset superfast \
-            -tune zerolatency \
-            -x264opts keyint=50:min-keyint=50:no-scenecut \
-            -pix_fmt yuv420p \
+            ffmpeg -hide_banner -loglevel error \
+            -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 10 \
+            -timeout 10000000 \
+            -f mpegts \
+            -i 'http://cdn.t02m.cc/a/m/953589?token=ShoJV0NcEgMVDwFRBQMPAFVRB1FQAwIAAgNSVV1XU1AJDwVUBVYCX1UaSUEXREVVBwg6DFUXC10GBgVeARlAEEJdE2lZUBIDFQ9TVVQFBQhESUcRWFhURgkEB1EOBFpWCAxTGhJEWV0VAkdRVgAAAldWR0kTUEkQVkdeB1RqBgBHUQJTEg5eTFtUSUELXmhUAwgEC1UXC0YDFxxEUUYSRwtWFFpcGBJbXkwXAhBVFQpEVldUBhcdRlBaRQhMRxtHCxonZBIYElxPTAANF1lYXkRfRxFCFx1GWkZvFF1GFhdUWQxTQhYKGwcaSUEJUU9vBQoLC1RWRQ1cW0NEAhdTRx0aDFleXURWRWcVCgASDRJUV1VSAAwHRk4' \
+            -c:v libx264 -preset veryfast -tune zerolatency -pix_fmt yuv420p \
             -b:v 2500k -maxrate 2500k -bufsize 5000k \
-            -c:a aac -b:a 128k -ac 2 -ar 44100 \
-            -f flv \
-            "rtmps://dc4-1.rtmp.t.me/s/2469921338:bsK9F5BRae81ZMRCvUZFgA"
-            sleep 3
+            -vf "fps=30,scale=1280:720,format=yuv420p,drawtext=text='t.me/xl9rr':fontsize=28:fontcolor=white@0.7:x=w-mod(t*90\,(w+tw)):y=h-62" \
+            -g 60 -sc_threshold 0 \
+            -c:a aac -b:a 100k -ar 44100 \
+            -max_muxing_queue_size 1024 \
+            -f flv "rtmps://dc4-1.rtmp.t.me/s/2469921338:bsK9F5BRae81ZMRCvUZFgA"
+            sleep 5
           done
